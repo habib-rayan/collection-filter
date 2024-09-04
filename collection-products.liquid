@@ -1,0 +1,58 @@
+{{ 'collection-products.css' |  asset_url | stylesheet_tag:preload:true }}
+{{ 'product-card.css' |  asset_url | stylesheet_tag:preload:true }}
+{{ 'filter.css' |  asset_url | stylesheet_tag:preload:true }}
+{{ 'filter.js' |  asset_url | script_tag }}
+
+<section class="section collection-products-section">
+    <div class="collection-product-top">
+        <div class="collection-breadcramp">
+            <a href="/">Home</a>
+            <span>/</span>
+            <span>Collections</span>
+            <span>/</span>
+            <span>{{ collection.title }}</span>
+        </div>
+        <div class="collection-top-right">
+            <div class="sort-by">
+                {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                <select class="collection-sort">
+                    {%- for option in collection.sort_options -%}
+                    <option value="{{ option.value | escape }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name | escape }}</option>
+                    {%- endfor -%}
+                </select>
+            </div>
+            <div class="product-count">
+                <span class="product-count-number">{{ collection.all_products_count }} Products</span>
+            </div>
+        </div>
+        <div class="filter-icon">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-filter" viewBox="0 0 20 13"><path d="M18.5 2.75a.75.75 0 0 1 .102 1.493l-.102.007h-17a.75.75 0 0 1-.102-1.493L1.5 2.75h17ZM18.5 8.75a.75.75 0 0 1 .102 1.493l-.102.007h-17a.75.75 0 0 1-.102-1.493L1.5 8.75h17Z"></path><path d="M5.5.25a.75.75 0 0 1 .743.648L6.25 1v5a.75.75 0 0 1-1.493.102L4.75 6V1A.75.75 0 0 1 5.5.25ZM14.5 6.25a.75.75 0 0 1 .743.648L15.25 7v5a.75.75 0 0 1-1.493.102L13.75 12V7a.75.75 0 0 1 .75-.75Z"></path></svg>
+        </div>
+    </div>
+    <div class="collection-product-wrap">
+        <div class="collection-filter">
+            {%- render 'collection-filter', results: collection -%} 
+        </div>
+        <div class="collection-products">
+            {% for product in collection.products %}
+                {%- render 'product-card', product: product -%}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Collection Products",
+    "settings": [
+      
+    ],
+    "presets": [
+      {
+        "name": "Collection Products",
+        "settings": {
+        }
+      }
+    ]
+  }
+{% endschema %}
