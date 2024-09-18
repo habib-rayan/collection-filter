@@ -87,12 +87,43 @@ $(document).ready(function(){
     });
 });
 
+function sortCheck(e, el) {
+    var sort = $(el).val();
+    var coll = $('.collection_name').val();
+
+    if( coll == 'products') {
+        coll = 'all'
+    } else {
+        coll = $('.collection_name').val();
+    }
+    var option_name = '';
+    $(".filter-item-checkbox:checked").each(function(index, element){
+        if(index !== (length -1 )) {
+            option_name += $(this).data('option') + '=';
+            option_name += $(this).val() + '&';
+        } else {
+            option_name += $(this).data('option') + '=';
+            option_name += $(this).val();
+        }
+    });
+    if(option_name !='') {
+        var url = '/collections/' + coll + '?' + option_name + '&sort_by=' + sort; 
+        var filter_url = '/collections/' + coll + '?' + option_name + '&sort_by=' + sort;
+        window.history.pushState({}, null, filter_url);
+        filter_update(url);
+    }else{
+        var url = '/collections/' + coll + '?sort_by=' + sort; 
+        var filter_url = '/collections/' + coll + '?sort_by=' + sort;
+        window.history.pushState({}, null, filter_url);
+        filter_update(url);
+    }
+}
 
 function filterCheck(){
     var option_name = '';
     var length = $('.filter-item-checkbox:checked').length;
+    var sort = $('.sort-checkbox:checked').val();
     var coll = $('.collection_name').val();
-    var sort = $('.collection-sort option:selected').val();
 
     if( coll == 'products') {
         coll = 'all'

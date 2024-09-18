@@ -183,6 +183,22 @@ input[type="range"]::-moz-range-thumb {
 .mobile-heading {
     display: none;
 }
+.facet-checkbox-text:first-letter {
+    text-transform: uppercase;
+}
+
+.collection-sort {
+  width: 100%;
+  margin: 0;
+  background: #eeeeee;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+.sort-by {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
 @media only screen and (max-width:767px) {
     .mobile-heading {
         display: flex;
